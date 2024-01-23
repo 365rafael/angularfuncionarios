@@ -10,6 +10,8 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
 import { CadastroComponent } from './pages/cadastro/cadastro.component';
 import { FuncionarioFormComponent } from './components/funcionario-form/funcionario-form.component';
+import { EditarComponent } from './pages/editar/editar.component';
+import { DetalhesComponent } from './pages/detalhes/detalhes.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +19,8 @@ import { FuncionarioFormComponent } from './components/funcionario-form/funciona
     HomeComponent,
     CadastroComponent,
     FuncionarioFormComponent,
+    EditarComponent,
+    DetalhesComponent,
   ],
   imports: [
     BrowserModule,
