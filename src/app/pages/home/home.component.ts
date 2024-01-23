@@ -1,35 +1,40 @@
 import { Component, OnInit } from '@angular/core';
 import { FuncionarioService } from '../../services/funcionario.service';
 import { Funcionario } from '../../models/Funcionarios';
+import { MatDialog } from '@angular/material/dialog';
+import { ExcluirComponent } from '../../components/excluir/excluir.component';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit{
 
   funcionarios: Funcionario[] = [];
   funcionariosGeral: Funcionario[] = [];
+  columnsToDisplay = ['Situacao', 'Nome', 'Sobrenome', 'Departamento', 'Ações', 'Teste'];
 
-  constructor(private funcionarioService: FuncionarioService){}
+
+  constructor(private funcionarioService : FuncionarioService, public matDialog: MatDialog) { }
+
 
   ngOnInit(): void {
-
-    this.funcionarioService.GetFuncionarios().subscribe(data => {
+    this.funcionarioService.GetFuncionarios().subscribe((data) => {
       const dados = data.dados;
-      dados.map((item) => {
-        item.dataDeCriacao = new Date(item.dataDeCriacao!).toLocaleDateString('pt-BR')
-        item.dataDeAlteracao = new Date(item.dataDeAlteracao!).toLocaleDateString('pt-BR')
-      })
-      this.funcionarios = data.dados;
-      this.funcionariosGeral = data.dados;
-    });
+       dados.map((item) => {
+         item.dataDeCriacao = new Date(item.dataDeCriacao!).toLocaleDateString('pt-BE');
+       });
 
+      this.funcionariosGeral = dados;
+      this.funcionarios = dados;
 
+    })
   }
 
-  search(event: Event){
+
+
+  search(event : Event){
     const target = event.target as HTMLInputElement;
     const value = target.value.toLowerCase();
 
@@ -37,5 +42,17 @@ export class HomeComponent implements OnInit {
       return funcionario.nome.toLowerCase().includes(value);
     })
   }
+
+
+  openDialog(id : number){
+    this.matDialog.open(ExcluirComponent,{
+      width: '350px',
+      height: '350px',
+      data: {
+        id: id
+      }
+    })
+  }
+
 
 }
